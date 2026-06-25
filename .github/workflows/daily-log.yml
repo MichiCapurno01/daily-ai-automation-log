@@ -2,7 +2,7 @@ name: Daily AI Automation Log
 
 on:
   schedule:
-    - cron: "0 14 * * *" # Daily at 10 PM Philippines time
+    - cron: "0 14 * * *"
   workflow_dispatch:
 
 permissions:
@@ -20,29 +20,26 @@ jobs:
         run: |
           DATE=$(date -u +"%Y-%m-%d")
           mkdir -p logs
-
-          cat > "logs/$DATE.md" << EOF
-# Daily AI Automation Log - $DATE
-
-## Focus
-- AI automation practice
-- LLM workflow improvement
-- API / webhook / n8n learning
-
-## Notes
-- Updated daily AI automation progress log.
-- Practiced or reviewed AI workflows, prompt engineering, API integrations, or automation systems.
-
-## Tools
-- n8n
-- OpenAI / Claude
-- APIs
-- CRM automation
-- Webhooks
-
-## Progress
-- Maintained daily learning and project activity.
-EOF
+          echo "# Daily AI Automation Log - $DATE" > logs/$DATE.md
+          echo "" >> logs/$DATE.md
+          echo "## Focus" >> logs/$DATE.md
+          echo "- AI automation practice" >> logs/$DATE.md
+          echo "- LLM workflow improvement" >> logs/$DATE.md
+          echo "- API / webhook / n8n learning" >> logs/$DATE.md
+          echo "" >> logs/$DATE.md
+          echo "## Notes" >> logs/$DATE.md
+          echo "- Updated daily AI automation progress log." >> logs/$DATE.md
+          echo "- Practiced or reviewed AI workflows, prompt engineering, API integrations, or automation systems." >> logs/$DATE.md
+          echo "" >> logs/$DATE.md
+          echo "## Tools" >> logs/$DATE.md
+          echo "- n8n" >> logs/$DATE.md
+          echo "- OpenAI / Claude" >> logs/$DATE.md
+          echo "- APIs" >> logs/$DATE.md
+          echo "- CRM automation" >> logs/$DATE.md
+          echo "- Webhooks" >> logs/$DATE.md
+          echo "" >> logs/$DATE.md
+          echo "## Progress" >> logs/$DATE.md
+          echo "- Maintained daily learning and project activity." >> logs/$DATE.md
 
       - name: Update README timestamp
         run: |
@@ -58,7 +55,6 @@ EOF
         run: |
           git config --global user.name "MichiCapurno01"
           git config --global user.email "michicapurno01@gmail.com"
-
           git add .
           git commit -m "Update daily AI automation log" || echo "No changes to commit"
           git push
