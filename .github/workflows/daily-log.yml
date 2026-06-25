@@ -1,0 +1,64 @@
+name: Daily AI Automation Log
+
+on:
+  schedule:
+    - cron: "0 14 * * *" # Daily at 10 PM Philippines time
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  daily-log:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create daily log
+        run: |
+          DATE=$(date -u +"%Y-%m-%d")
+          mkdir -p logs
+
+          cat > "logs/$DATE.md" << EOF
+# Daily AI Automation Log - $DATE
+
+## Focus
+- AI automation practice
+- LLM workflow improvement
+- API / webhook / n8n learning
+
+## Notes
+- Updated daily AI automation progress log.
+- Practiced or reviewed AI workflows, prompt engineering, API integrations, or automation systems.
+
+## Tools
+- n8n
+- OpenAI / Claude
+- APIs
+- CRM automation
+- Webhooks
+
+## Progress
+- Maintained daily learning and project activity.
+EOF
+
+      - name: Update README timestamp
+        run: |
+          DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          echo "# Daily AI Automation Log" > README.md
+          echo "" >> README.md
+          echo "This repository tracks my daily progress in AI automation, LLM workflows, APIs, n8n, and agentic systems." >> README.md
+          echo "" >> README.md
+          echo "## Latest Update" >> README.md
+          echo "Last updated: $DATE" >> README.md
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "MichiCapurno01"
+          git config --global user.email "michicapurno01@gmail.com"
+
+          git add .
+          git commit -m "Update daily AI automation log" || echo "No changes to commit"
+          git push
